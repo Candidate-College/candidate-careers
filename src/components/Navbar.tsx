@@ -327,7 +327,7 @@ const Navbar: React.FC<any> = ({
         className={`lg:mx-auto md:hidden lg:flex-1 flex flex-row items-center justify-between px-7 py-1 border-b border-b-border lg:border-none h-[10vh] md:h-fit`}
       >
         <Link
-          href="/"
+          href="https://candidatecollege.org/"
           title="Candidate College Home"
           about="Candidate College Home"
           className="block cursor-pointer"
@@ -359,7 +359,7 @@ const Navbar: React.FC<any> = ({
       <div className="w-full">
         <nav className="md:flex hidden max-w-5xl flex-row items-center justify-between mx-auto">
           <Link
-            href="/"
+            href="https://candidatecollege.org/"
             title="Candidate College Home"
             about="Candidate College Home"
             className="block cursor-pointer"
