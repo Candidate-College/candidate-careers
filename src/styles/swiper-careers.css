@@ -1,0 +1,4 @@
+.slider-controler .slider-arrow::after {
+  content: "sdfgd";
+  background-color: red;
+}

@@ -1,0 +1,13 @@
+/* cta.css */
+.element-container {
+  display: flex;
+  flex-direction: column;
+  opacity: 0;
+  visibility: hidden; /* Hide initially */
+  transition: opacity 0.5s ease, visibility 0.5s ease; /* Add transitions */
+}
+
+.element-container.show {
+  opacity: 1;
+  visibility: visible; /* Show when the 'show' class is added */
+}

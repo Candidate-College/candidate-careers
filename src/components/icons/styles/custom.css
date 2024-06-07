@@ -1,0 +1,13 @@
+.spotify-svg {
+    fill: #FFDE59;
+    transform: ;
+    msFilter: ;
+}
+
+.spotify-svg:hover{
+    fill: #FFF !important;
+}
+
+.spotify-svg path:hover {
+    fill: #FFF !important;
+}

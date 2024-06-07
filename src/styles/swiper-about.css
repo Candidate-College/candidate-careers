@@ -1,0 +1,3 @@
+.slider-controler .slider-arrow::after {
+  content: "";
+}

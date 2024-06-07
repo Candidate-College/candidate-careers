@@ -1,15 +1,8 @@
-import "./globals.css";
-
-import type { Metadata } from "next";
-import { Plus_Jakarta_Sans } from "next/font/google";
-
-const plus_jakarta_sans = Plus_Jakarta_Sans({
-  subsets: ["latin"],
-  display: "swap",
-});
+import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Candidate College - Education Platform for Students in Indonesia",
+  title:
+    "Admin Dashboard Candidate College - Education Platform for Students in Indonesia",
   description:
     "Candidate College is an Education Platform that works to facilitate students in Indonesia at home and aboard to achieve a quality education system.",
   authors: [
@@ -54,14 +47,14 @@ export const metadata: Metadata = {
   ],
 };
 
-export default function RootLayout({
+export default function AdminLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body className={plus_jakarta_sans.className}>{children}</body>
-    </html>
+    <main className="bg-white box-border w-full min-h-screen flex text-black">
+      {children}
+    </main>
   );
 }
