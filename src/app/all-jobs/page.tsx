@@ -41,13 +41,7 @@ const AllJobs = async ({ searchParams }: { searchParams?: TFilterJob }) => {
 
       {/* Open Position Section */}
       <section className="w-full mb-[72px] flex flex-col justify-center items-center relative bottom-[72px] lg:mt-[96px] lg:bottom-[220px]">
-        <h2 className="relative text-2xl font-bold lg:text-[32px] lg:leading-10 text-[#90A3BF] justify-self-start w-full md:max-w-[972px] px-10 md:px-[86px]">
-          All Open Positions
-        </h2>
-
-        <Suspense
-          key={name.toString() + departement.toString() + division.toString()}
-        >
+        <Suspense>
           <ListJobs name={name} departement={departement} division={division} />
         </Suspense>
       </section>

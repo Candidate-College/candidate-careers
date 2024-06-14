@@ -61,7 +61,7 @@ const FilterJobs = () => {
             onChange={(e) =>
               setForm((prev) => ({ ...prev, name: e.target.value }))
             }
-            className="w-full mb-2 lg:w-[425px] h-[52px] md:mr-6 rounded-[50px] pl-[40px] py-1"
+            className="w-full mb-2 lg:w-[425px] h-[52px] md:mr-6 rounded-[50px] pl-[40px] py-1 text-black"
             type="text"
             placeholder="Masukkan kata kunci"
             name="name"
@@ -74,13 +74,19 @@ const FilterJobs = () => {
               onChange={(e) =>
                 setForm((prev) => ({ ...prev, department: e.target.value }))
               }
-              className="w-full md:w-[216px] h-[52px] rounded-[50px] px-6 py-1 appearance-none border"
+              className="w-full md:w-[216px] h-[52px] rounded-[50px] px-6 py-1 appearance-none border text-black"
               name="departement"
               id=""
             >
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
+              <option className="text-black" value="1">
+                1
+              </option>
+              <option className="text-black" value="2">
+                2
+              </option>
+              <option className="text-black" value="3">
+                3
+              </option>
             </select>
             <div className="absolute inset-y-0 top-1 right-2 md:right-5 flex items-center pointer-events-none">
               <CaretGreyIcon />
@@ -92,13 +98,19 @@ const FilterJobs = () => {
               onChange={(e) =>
                 setForm((prev) => ({ ...prev, division: e.target.value }))
               }
-              className="w-full md:w-[153px] h-[52px] rounded-[50px] px-6 py-1 appearance-none border"
+              className="w-full md:w-[153px] h-[52px] rounded-[50px] px-6 py-1 appearance-none border text-black"
               name="devisi"
               id=""
             >
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
+              <option className="text-black" value="1">
+                1
+              </option>
+              <option className="text-black" value="2">
+                2
+              </option>
+              <option className="text-black" value="3">
+                3
+              </option>
             </select>
             <div className="absolute inset-y-0 top-1 right-5 md:right-7 flex items-center pointer-events-none">
               <CaretGreyIcon />
