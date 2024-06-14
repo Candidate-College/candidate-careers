@@ -7,6 +7,7 @@ import BriefCasePrimaryIcon from "@/components/icons/BriefCasePrimaryIcon";
 import DotPrimaryIcon from "@/components/icons/DotPrimaryIcon";
 import NotFoundPosition from "./NotFoundPosition";
 import axios from "axios";
+import ContainerJob from "@/components/jobs/ContainerJob";
 
 const positions = [
   {
@@ -119,12 +120,7 @@ const MoreJobs = () => {
   return (
     <Fragment>
       {position ? (
-        <div
-          className="mt-6 w-full md:max-w-[972px] h-full rounded-[50px] pt-[42px] pb-8 bg-white"
-          style={{
-            boxShadow: "0px 2px 20px 0px #00000026",
-          }}
-        >
+        <ContainerJob>
           {positions.slice(0, 5).map((position, idx) => (
             <Link
               href={`/all-jobs/${position.name}`}
@@ -147,14 +143,14 @@ const MoreJobs = () => {
                     {position.sector}
                   </p>
 
-                  <p className="bg-secondary px-4 py-1 text-primary rounded-2xl text-base mr-4">
+                  <p className="bg-secondary px-3 lg:px-4 py-1 text-primary rounded-2xl text-base mr-4">
                     {position.role}
                   </p>
-                  <p className="bg-secondary px-4 py-1 text-primary rounded-2xl text-base mr-4">
+                  <p className="bg-secondary px-3 lg:px-4 py-1 text-primary rounded-2xl text-base mr-4">
                     {position.division}
                   </p>
                   {position.urgent && (
-                    <p className="bg-[#CB3A31] px-4 py-1 text-white rounded-2xl text-base mr-4">
+                    <p className="bg-[#CB3A31] px-3 lg:px-4 py-1 text-white rounded-2xl text-base mr-4">
                       Urgent Hiring
                     </p>
                   )}
@@ -169,29 +165,7 @@ const MoreJobs = () => {
               <ArrowRight />
             </div>
           </div>
-
-          {/* <div className="flex justify-center gap-3">
-        <Link href={"/all-jobs"} className="">View More jobs</Link>
-      </div> */}
-
-          {/* <div className="flex flex-col text-base text-primary justify-center items-center gap-5 pt-10">
-        <p>
-          Showing <span className="font-bold">{itemsToShow}</span> out of{" "}
-          <span className="font-bold">20</span>
-        </p>
-
-        <button
-          style={{
-            boxShadow: "0px 25px 30px 0px #0041E81A",
-          }}
-          onClick={showMoreItems}
-          type="button"
-          className="font-medium lg:font-semibold px-7 py-3 lg:px-8 lg:py-4 bg-[#FFDE59] rounded-[30px]"
-        >
-          Load More Jobs
-        </button>
-      </div> */}
-        </div>
+        </ContainerJob>
       ) : (
         <NotFoundPosition />
       )}

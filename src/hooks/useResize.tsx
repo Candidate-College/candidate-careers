@@ -42,8 +42,8 @@ const useResponsiveItems = (
     // Set initial state
     const initialIsMobile = window.innerWidth < 768;
     setIsMobile(initialIsMobile);
-    setItemsToShow(initialIsMobile ? 5 : 10);
-  }, []);
+    setItemsToShow(initialIsMobile ? mobileIncrement : desktopIncrement);
+  }, [mobileIncrement, desktopIncrement]);
 
   const showMoreItems = () => {
     const itemsToAdd = isMobile ? mobileIncrement : desktopIncrement;

@@ -8,6 +8,8 @@ import DotPrimaryIcon from "@/components/icons/DotPrimaryIcon";
 import useResponsiveItems from "@/hooks/useResize";
 import NotFoundPosition from "./NotFoundPosition";
 import axios from "axios";
+import { TFilterJob } from "@/app/all-jobs/page";
+import ContainerJob from "@/components/jobs/ContainerJob";
 
 const positions = [
   {
@@ -102,7 +104,7 @@ const positions = [
   },
 ];
 
-const ListJobs = () => {
+const ListJobs = ({ name, departement, division }: TFilterJob) => {
   const { itemsToShow, showMoreItems, isMobile } = useResponsiveItems(5, 10);
 
   const isNotFound = false;
@@ -117,19 +119,14 @@ const ListJobs = () => {
     };
 
     getAPI();
-  }, [isMobile]);
+  }, [isMobile, name, departement, division]);
 
   return (
     <Fragment>
       {isNotFound ? (
         <NotFoundPosition />
       ) : (
-        <div
-          className="mt-6 w-full md:max-w-[972px] h-full rounded-[50px] pt-[42px] pb-8 bg-white"
-          style={{
-            boxShadow: "0px 2px 20px 0px #00000026",
-          }}
-        >
+        <ContainerJob>
           {positions.slice(0, isMobile ? 5 : 10).map((position, idx) => (
             <Link
               href={`/all-jobs/${position.name}`}
@@ -189,7 +186,7 @@ const ListJobs = () => {
               Load More Jobs
             </button>
           </div>
-        </div>
+        </ContainerJob>
       )}
     </Fragment>
   );

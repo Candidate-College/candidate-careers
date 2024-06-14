@@ -13,7 +13,18 @@ import "../styles/swiper-article-page.css";
 import ArrowRight from "@/components/icons/ArrowRight";
 import Image from "next/image";
 import FilterJobs from "@/components/jobs/FilterJobs";
-import MoreJobs from "@/components/jobs/MoreJobs";
+import { Suspense } from "react";
+import LoadingListJobs from "@/components/jobs/Loading";
+import dynamic from "next/dynamic";
+import ContainerJob from "@/components/jobs/ContainerJob";
+const MoreJobs = dynamic(() => import("@/components/jobs/MoreJobs"), {
+  ssr: false,
+  loading: () => (
+    <ContainerJob>
+      <LoadingListJobs />
+    </ContainerJob>
+  ),
+});
 
 const Careers = () => {
   const careers = [
@@ -47,7 +58,9 @@ const Careers = () => {
           All Open Positions
         </h2>
 
-        <MoreJobs />
+        <Suspense fallback={<LoadingListJobs />}>
+          <MoreJobs />
+        </Suspense>
       </section>
       {/* AKhir Open Position Section */}
 

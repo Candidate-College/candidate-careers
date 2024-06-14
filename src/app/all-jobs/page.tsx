@@ -1,7 +1,17 @@
 import Navbar from "@/components/Navbar";
 import FilterJobs from "@/components/jobs/FilterJobs";
-import ListJobs from "@/components/jobs/ListJobs";
 import React, { Suspense } from "react";
+import dynamic from "next/dynamic";
+import ContainerJob from "@/components/jobs/ContainerJob";
+import LoadingListJobs from "@/components/jobs/Loading";
+const ListJobs = dynamic(() => import("@/components/jobs/ListJobs"), {
+  ssr: false,
+  loading: () => (
+    <ContainerJob>
+      <LoadingListJobs />
+    </ContainerJob>
+  ),
+});
 
 export type TFilterJob = {
   name: string;
@@ -10,6 +20,10 @@ export type TFilterJob = {
 };
 
 const AllJobs = async ({ searchParams }: { searchParams?: TFilterJob }) => {
+  const name = searchParams?.name || "";
+  const departement = searchParams?.departement || "";
+  const division = searchParams?.division || "";
+
   return (
     <main className="bg-white w-full h-full overflow-hidden">
       <Navbar />
@@ -31,7 +45,11 @@ const AllJobs = async ({ searchParams }: { searchParams?: TFilterJob }) => {
           All Open Positions
         </h2>
 
-        <ListJobs />
+        <Suspense
+          key={name.toString() + departement.toString() + division.toString()}
+        >
+          <ListJobs name={name} departement={departement} division={division} />
+        </Suspense>
       </section>
       {/* AKhir Open Position Section */}
     </main>
