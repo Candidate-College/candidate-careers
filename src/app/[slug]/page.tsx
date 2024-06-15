@@ -208,7 +208,7 @@ const Detail = () => {
           </div>
 
           <div className="flex flex-col">
-            <button className="mt-10 rounded-[50px] drop-shadow-xl text-lg px-20 py-4 font-bold h-full text-primary bg-secondary items-center justify-center hidden lg:flex w-max">
+            <button className="mt-10 rounded-[50px] hover:bg-[#d4bc5c] drop-shadow-xl text-lg px-20 py-4 font-bold h-full text-primary bg-secondary items-center justify-center hidden lg:flex w-max">
               <a href="#applyForm">Apply Now</a>
             </button>
 
