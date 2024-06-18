@@ -10,12 +10,21 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "../styles/swiper-careers.css";
 import "../styles/swiper-article-page.css";
-import SearchIconNew from "@/components/icons/SearchIconNew";
-import CaretGreyIcon from "@/components/icons/CaretGreyIcon";
-import BriefCasePrimaryIcon from "@/components/icons/BriefCasePrimaryIcon";
-import DotPrimaryIcon from "@/components/icons/DotPrimaryIcon";
 import ArrowRight from "@/components/icons/ArrowRight";
 import Image from "next/image";
+import FilterJobs from "@/components/jobs/FilterJobs";
+import { Suspense } from "react";
+import LoadingListJobs from "@/components/jobs/Loading";
+import dynamic from "next/dynamic";
+import ContainerJob from "@/components/jobs/ContainerJob";
+const MoreJobs = dynamic(() => import("@/components/jobs/MoreJobs"), {
+  ssr: false,
+  loading: () => (
+    <ContainerJob>
+      <LoadingListJobs />
+    </ContainerJob>
+  ),
+});
 
 const Careers = () => {
   const careers = [
@@ -38,172 +47,16 @@ const Careers = () => {
           Explore your dream job destination!
         </h1>
 
-        <form action="" className="mt-[42px] flex space-x-6">
-          <div className="flex flex-col md:flex-row w-full mx-7 items-center">
-            <div className="relative w-full">
-              <div className="absolute inset-y-0 bottom-2 left-0 pl-3 flex items-center pointer-events-none">
-                <SearchIconNew />
-              </div>
-              <input
-                className="w-full mb-2 md:w-[425px] h-[52px] md:mr-6 rounded-[50px] pl-[40px] py-1"
-                type="text"
-                placeholder="Masukkan kata kunci"
-              />
-            </div>
-
-            <div className="flex w-full gap-2 mb-2">
-              <div className="relative w-full">
-                <select
-                  className="w-full md:w-[216px] h-[52px] rounded-[50px] px-6 py-1 appearance-none border"
-                  name=""
-                  id=""
-                >
-                  <option value="">Department</option>
-                </select>
-                <div className="absolute inset-y-0 top-1 right-2 md:right-5 flex items-center pointer-events-none">
-                  <CaretGreyIcon />
-                </div>
-              </div>
-
-              <div className="relative w-full">
-                <select
-                  className="w-full md:w-[153px] h-[52px] rounded-[50px] px-6 py-1 appearance-none border"
-                  name=""
-                  id=""
-                >
-                  <option value="">Divisi</option>
-                </select>
-                <div className="absolute inset-y-0 top-1 right-5 md:right-7 flex items-center pointer-events-none">
-                  <CaretGreyIcon />
-                </div>
-              </div>
-            </div>
-            <button
-              className="bg-secondary w-full lg:w-[92px] h-[52px] rounded-[50px] px-5"
-              type="submit"
-            >
-              Cari
-            </button>
-          </div>
-        </form>
+        <FilterJobs />
       </section>
 
       {/* Akhir Hero Section */}
 
       {/* Open Position Section */}
       <section className="w-full mb-[72px] flex flex-col justify-center items-center relative bottom-[72px] lg:mt-[96px] lg:bottom-[220px]">
-        <h2 className="relative right-[80px] lg:right-[240px] lg:text-[32px] lg:leading-10 text-[#90A3BF]">
-          All Open Positions
-        </h2>
-
-        <div className="mt-6 w-full  md:w-[972px] h-full rounded-[50px] pt-[42px] pb-8 bg-white">
-          <div className="flex items-center">
-            <div className="ml-6 lg:ml-[74px] mb-7 w-full lg:w-[80%]">
-              <h3 className="text-[16px] lg:text-[22px] text-primary font-bold lg:leading-[28px] mb-4">
-                Front-end Developer
-              </h3>
-              <div className="flex items-center">
-                <BriefCasePrimaryIcon />
-
-                <p className="text-[12px] text-black ml-2 mr-4">Department</p>
-                <DotPrimaryIcon />
-
-                <p className="text-[12px] text-black ml-2 mr-4">
-                  Web Development
-                </p>
-                <p className="bg-secondary px-2 py-1 text-primary rounded-2xl text-[12px]">
-                  Internship
-                </p>
-              </div>
-            </div>
-
-            <div className="hidden lg:block lg:relative lg:bottom-[30px]">
-              <ArrowRight />
-            </div>
-          </div>
-
-          <div className="flex items-center">
-            <div className="ml-6 lg:ml-[74px] mb-7 w-full lg:w-[80%]">
-              <h3 className="text-[16px] lg:text-[22px] text-primary font-bold lg:leading-[28px] mb-4">
-                Back-end Developer
-              </h3>
-              <div className="flex items-center">
-                <BriefCasePrimaryIcon />
-
-                <p className="text-[12px] text-black ml-2 mr-4">Department</p>
-                <DotPrimaryIcon />
-
-                <p className="text-[12px] text-black ml-2 mr-4">
-                  Web Development
-                </p>
-                <p className="bg-secondary px-2 py-1 text-primary rounded-2xl text-[12px]">
-                  Internship
-                </p>
-              </div>
-            </div>
-
-            <div className="hidden lg:block lg:relative lg:bottom-[30px]">
-              <ArrowRight />
-            </div>
-          </div>
-
-          <div className="flex items-center">
-            <div className="ml-6 lg:ml-[74px] mb-7 w-full lg:w-[80%]">
-              <h3 className="text-[16px] lg:text-[22px] text-primary font-bold lg:leading-[28px] mb-4">
-                QA Analyst (WFH)
-              </h3>
-              <div className="flex items-center">
-                <BriefCasePrimaryIcon />
-
-                <p className="text-[12px] text-black ml-2 mr-4">Department</p>
-                <DotPrimaryIcon />
-
-                <p className="text-[12px] text-black ml-2 mr-4">
-                  Web Development
-                </p>
-                <p className="bg-secondary px-2 py-1 text-primary rounded-2xl text-[12px]">
-                  Internship
-                </p>
-              </div>
-            </div>
-
-            <div className="hidden lg:block lg:relative lg:bottom-[30px]">
-              <ArrowRight />
-            </div>
-          </div>
-
-          <div className="flex items-center">
-            <div className="ml-6 lg:ml-[74px] mb-7 w-full lg:w-[80%]">
-              <h3 className="text-[16px] lg:text-[22px] text-primary font-bold lg:leading-[28px] mb-4">
-                UI/UX Designer
-              </h3>
-              <div className="flex items-center">
-                <BriefCasePrimaryIcon />
-
-                <p className="text-[12px] text-black ml-2 mr-4">Department</p>
-                <DotPrimaryIcon />
-
-                <p className="text-[12px] text-black ml-2 mr-4">
-                  Web Development
-                </p>
-                <p className="bg-secondary px-2 py-1 text-primary rounded-2xl text-[12px]">
-                  Internship
-                </p>
-              </div>
-            </div>
-
-            <div className="hidden lg:block lg:relative lg:bottom-[30px]">
-              <ArrowRight />
-            </div>
-          </div>
-
-          <h4 className="text-primary flex items-center justify-center font-bold text-center text-[14px] lg:text-[22px] leading-[28px] mb-12 mt-6">
-            <a href="#">View more jobs</a>
-            <div className="relative top-1 ml-3">
-              <ArrowRight />
-            </div>
-          </h4>
-        </div>
+        <Suspense>
+          <MoreJobs />
+        </Suspense>
       </section>
       {/* AKhir Open Position Section */}
 

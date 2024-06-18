@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useEffect, useState } from "react";
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
@@ -26,7 +28,9 @@ const Navbar: React.FC<any> = ({
   active,
   isDetail,
   className,
+  position = "fixed",
 }: {
+  position?: string;
   className?: string;
   active: any;
   isDetail: any;
@@ -319,7 +323,7 @@ const Navbar: React.FC<any> = ({
     <header
       className={`${className} w-full z-50 ${
         isDetail ? "bg-white shadow-lg" : "bg-primary"
-      } fixed lg:flex lg:flex-row lg:items-center lg:justify-between lg:border-b lg:border-b-border ${
+      } ${position} lg:flex lg:flex-row lg:items-center lg:justify-between lg:border-b lg:border-b-border ${
         isContactOpen ? "lg:px-0" : "lg:px-0"
       }`}
     >
