@@ -1,14 +1,10 @@
-"use client";
 import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
 import FilterJobs from "@/components/jobs/FilterJobs";
-import { Suspense } from "react";
-import LoadingListJobs from "@/components/jobs/Loading";
+import React, { Suspense } from "react";
 import dynamic from "next/dynamic";
 import ContainerJob from "@/components/jobs/ContainerJob";
-import LifeAtCC from "@/components/main-page/LifeAtCC";
-import SliderLifeAtCC from "@/components/main-page/SliderLifeAtCC";
-const MoreJobs = dynamic(() => import("@/components/jobs/MoreJobs"), {
+import LoadingListJobs from "@/components/jobs/Loading";
+const ListJobs = dynamic(() => import("@/components/jobs/ListJobs"), {
   ssr: false,
   loading: () => (
     <ContainerJob>
@@ -17,7 +13,17 @@ const MoreJobs = dynamic(() => import("@/components/jobs/MoreJobs"), {
   ),
 });
 
-const Careers = () => {
+export type TFilterJob = {
+  name: string;
+  departement: string;
+  division: string;
+};
+
+const AllJobs = async ({ searchParams }: { searchParams?: TFilterJob }) => {
+  const name = searchParams?.name || "";
+  const departement = searchParams?.departement || "";
+  const division = searchParams?.division || "";
+
   return (
     <main className="bg-white w-full h-full overflow-hidden">
       <Navbar />
@@ -36,25 +42,12 @@ const Careers = () => {
       {/* Open Position Section */}
       <section className="w-full mb-[72px] flex flex-col justify-center items-center relative bottom-[72px] lg:mt-[96px] lg:bottom-[220px]">
         <Suspense>
-          <MoreJobs />
+          <ListJobs name={name} departement={departement} division={division} />
         </Suspense>
       </section>
       {/* AKhir Open Position Section */}
-
-      {/* Life at CC Section */}
-      <LifeAtCC />
-      {/* Akhir Life at CC Section */}
-
-      {/* Slider life at CC Section */}
-      <SliderLifeAtCC />
-      {/* Akhir Slider life at CC Section */}
-
-      {/* Footer */}
-      <div className="w-full bg-primary">
-        <Footer />
-      </div>
     </main>
   );
 };
 
-export default Careers;
+export default AllJobs;
