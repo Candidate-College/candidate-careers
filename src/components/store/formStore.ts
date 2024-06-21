@@ -1,20 +1,26 @@
 import create from 'zustand';
 
+interface FormData {
+  email: string;
+  name: string;
+  domicile: string;
+  university: string;
+  major: string;
+  semester: string;
+  whatsappNumber: string;
+  instagramAccount: string;
+  portfolioUrl: string;
+  cv: File | null;
+  proofCC: File | null;
+  proofSK: File | null;
+  proofJourney: File | null;
+  proofSequoia: File | null;
+}
+
 interface FormState {
-  formData: {
-    email: string;
-    name: string;
-    domicile: string;
-    university: string;
-    major: string;
-    semester: string;
-    whatsappNumber: string;
-    instagramAccount: string;
-    
-  };
+  formData: FormData;
+  setFormData: (data: Partial<FormData>) => void;
   currentStep: number;
-  totalSteps: number;
-  setFormData: (name: string, value: string) => void;
   nextStep: () => void;
 }
 
@@ -28,20 +34,16 @@ const useFormStore = create<FormState>((set) => ({
     semester: '',
     whatsappNumber: '',
     instagramAccount: '',
+    portfolioUrl: '',
+    cv: null,
+    proofCC: null,
+    proofSK: null,
+    proofJourney: null,
+    proofSequoia: null,
   },
+  setFormData: (data) => set((state) => ({ formData: { ...state.formData, ...data } })),
   currentStep: 1,
-  totalSteps: 4,
-  setFormData: (name, value) => set((state) => ({
-    formData: {
-      ...state.formData,
-      [name]: value,
-    },
-  })),
-  nextStep: () => set((state) => ({
-    currentStep: state.currentStep < state.totalSteps ? state.currentStep + 1 : state.currentStep,
-  })),
-
-  
+  nextStep: () => set((state) => ({ currentStep: state.currentStep + 1 })),
 }));
 
 export default useFormStore;

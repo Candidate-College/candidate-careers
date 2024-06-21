@@ -2,11 +2,13 @@ import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import LoadingBar from 'react-top-loading-bar';
+import useFormStore from '../store/formStore';
 
 const FinalForm: React.FC = () => {
   const router = useRouter();
   const [progress, setProgress] = useState(0);
   const [navigated, setNavigated] = useState(false);
+  const { formData, currentStep } = useFormStore();
 
   useEffect(() => {
     setProgress(100);
@@ -14,7 +16,8 @@ const FinalForm: React.FC = () => {
       setProgress(0);
       setNavigated(false);
     }
-  }, [navigated]);
+    console.log(formData);
+  }, [navigated, currentStep, formData]);
 
   const handleNavigation = () => {
     setProgress(100);
@@ -55,7 +58,7 @@ const FinalForm: React.FC = () => {
             Awesome! Your application is in!
           </h2>
           <p className="text-center text-slate-600 mb-6">
-            Thanks for applying to be our Front-End Developer! We &apos; ll be in touch soon.
+            Thanks for applying to be our Front-End Developer! We&apos;ll be in touch soon.
           </p>
           <div className="flex justify-center">
             <button
