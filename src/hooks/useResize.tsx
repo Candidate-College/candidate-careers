@@ -1,9 +1,6 @@
 import { useState, useEffect } from "react";
 
-const useResponsiveItems = (
-  mobileIncrement: number,
-  desktopIncrement: number
-) => {
+const useCheckSize = (mobileIncrement: number, desktopIncrement: number) => {
   const [itemsToShow, setItemsToShow] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
 
@@ -22,4 +19,4 @@ const useResponsiveItems = (
   return { itemsToShow, showMoreItems, isMobile };
 };
 
-export default useResponsiveItems;
+export default useCheckSize;

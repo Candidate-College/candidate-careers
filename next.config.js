@@ -1,5 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  env: {
+    api: "https://careers.candidatecollege.org",
+  },
   images: {
     domains: [
       "i.postimg.cc",

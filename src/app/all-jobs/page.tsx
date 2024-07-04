@@ -8,20 +8,20 @@ const ListJobs = dynamic(() => import("@/components/jobs/ListJobs"), {
   ssr: false,
   loading: () => (
     <ContainerJob>
-      <LoadingListJobs />
+      <LoadingListJobs list={5} />
     </ContainerJob>
   ),
 });
 
 export type TFilterJob = {
   name: string;
-  departement: string;
+  department: string;
   division: string;
 };
 
 const AllJobs = async ({ searchParams }: { searchParams?: TFilterJob }) => {
   const name = searchParams?.name || "";
-  const departement = searchParams?.departement || "";
+  const department = searchParams?.department || "";
   const division = searchParams?.division || "";
 
   return (
@@ -42,7 +42,7 @@ const AllJobs = async ({ searchParams }: { searchParams?: TFilterJob }) => {
       {/* Open Position Section */}
       <section className="w-full mb-[72px] flex flex-col justify-center items-center relative bottom-[72px] lg:mt-[96px] lg:bottom-[220px]">
         <Suspense>
-          <ListJobs name={name} departement={departement} division={division} />
+          <ListJobs name={name} department={department} division={division} />
         </Suspense>
       </section>
       {/* AKhir Open Position Section */}

@@ -12,7 +12,7 @@ const MoreJobs = dynamic(() => import("@/components/jobs/MoreJobs"), {
   ssr: false,
   loading: () => (
     <ContainerJob>
-      <LoadingListJobs />
+      <LoadingListJobs list={5} />
     </ContainerJob>
   ),
 });
