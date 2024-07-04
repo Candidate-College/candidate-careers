@@ -1,201 +1,150 @@
 "use client";
 
-import React, { Fragment, useEffect, useState } from "react";
-import ArrowRight from "@/components/icons/ArrowRight";
-import Link from "next/link";
-import BriefCasePrimaryIcon from "@/components/icons/BriefCasePrimaryIcon";
-import DotPrimaryIcon from "@/components/icons/DotPrimaryIcon";
-import useResponsiveItems from "@/hooks/useResize";
-import NotFoundPosition from "./NotFoundPosition";
+import React, { Fragment, useCallback, useEffect, useState } from "react";
+import useCheckSize from "@/hooks/useResize";
+import NotFoundPosition from "@/components/jobs/NotFoundPosition";
 import axios from "axios";
 import { TFilterJob } from "@/app/all-jobs/page";
 import ContainerJob from "@/components/jobs/ContainerJob";
+import { TVacanciesResponse } from "@/types/vacancies.type";
+import Loader from "@/components/icons/Loader";
+import CardJob from "@/components/jobs/CardJob";
+import LoadingListJobs from "@/components/jobs/Loading";
 
-const positions = [
-  {
-    id: 1,
-    name: "Frontend Developer",
-    department: "IT",
-    division: "Internship",
-    role: "Staff",
-    urgent: true,
-    sector: "Technology",
-  },
-  {
-    id: 2,
-    name: "Backend Developer",
-    department: "IT",
-    division: "Full-time",
-    role: "Senior",
-    urgent: false,
-    sector: "Technology",
-  },
-  {
-    id: 3,
-    name: "UI/UX Designer",
-    department: "Design",
-    division: "Internship",
-    role: "Intern",
-    urgent: true,
-    sector: "Design",
-  },
-  {
-    id: 4,
-    name: "Project Manager",
-    department: "Management",
-    division: "Full-time",
-    role: "Manager",
-    urgent: false,
-    sector: "Management",
-  },
-  {
-    id: 5,
-    name: "QA Engineer",
-    department: "IT",
-    division: "Contract",
-    role: "Staff",
-    urgent: true,
-    sector: "Technology",
-  },
-  {
-    id: 6,
-    name: "DevOps Engineer",
-    department: "IT",
-    division: "Full-time",
-    role: "Senior",
-    urgent: false,
-    sector: "Technology",
-  },
-  {
-    id: 7,
-    name: "Data Scientist",
-    department: "Data",
-    division: "Full-time",
-    role: "Staff",
-    urgent: true,
-    sector: "Data Analysis",
-  },
-  {
-    id: 8,
-    name: "Marketing Specialist",
-    department: "Marketing",
-    division: "Internship",
-    role: "Intern",
-    urgent: false,
-    sector: "Marketing",
-  },
-  {
-    id: 9,
-    name: "Content Writer",
-    department: "Content",
-    division: "Part-time",
-    role: "Staff",
-    urgent: true,
-    sector: "Content Creation",
-  },
-  {
-    id: 10,
-    name: "Customer Support",
-    department: "Support",
-    division: "Full-time",
-    role: "Staff",
-    urgent: false,
-    sector: "Customer Service",
-  },
-];
+// ListJobs component menerima props untuk filter
+const ListJobs = ({ name, department, division }: TFilterJob) => {
+  const { itemsToShow, showMoreItems, isMobile } = useCheckSize(5, 10);
+  const [listVacancies, setListVacancies] = useState<TVacanciesResponse | null>(
+    null
+  );
+  const [isLoading, setIsLoading] = useState(false);
+  const [isError, setIsError] = useState(false);
 
-const ListJobs = ({ name, departement, division }: TFilterJob) => {
-  const { itemsToShow, showMoreItems, isMobile } = useResponsiveItems(5, 10);
-
-  const isEmptyList = false;
-
-  useEffect(() => {
-    const getAPI = async () => {
+  // Fetch data lowongan pekerjaan dengan filter yang diberikan
+  const fetchVacancies = useCallback(
+    async (page = 1) => {
       try {
-        const { data } = await axios.get(
-          "https://dummyjson.com/products/categories"
+        setIsLoading(true);
+        const { data: values } = await axios.get(
+          `${process.env.api}/api/vacancies?page=${page}`
         );
+        const res: TVacanciesResponse = values;
+
+        // Filter data berdasarkan nama, departemen, dan divisi
+        const filteredData = res.data.filter((vacancy) => {
+          return (
+            !name ||
+            vacancy.name
+              .toLocaleLowerCase()
+              .includes(name.toLocaleLowerCase()) ||
+            !department ||
+            vacancy.department
+              .toLocaleLowerCase()
+              .includes(department.toLocaleLowerCase()) ||
+            !division ||
+            vacancy.division
+              .toLocaleLowerCase()
+              .includes(division.toLocaleLowerCase())
+          );
+        });
+
+        return { ...res, data: filteredData };
       } catch (error) {
-        console.log(error);
+        setIsError(true);
+        return null;
+      } finally {
+        setIsLoading(false);
+      }
+    },
+    [name, department, division]
+  );
+
+  // Memuat lebih banyak data lowongan pekerjaan
+  const loadMoreData = async () => {
+    if (listVacancies && itemsToShow < listVacancies.pagination.total) {
+      showMoreItems();
+      const nextPage = listVacancies.pagination.current_page + 1;
+      // if (nextPage <= listVacancies.pagination.last_page) {
+      const newVacancies = await fetchVacancies(nextPage);
+      if (!newVacancies) return;
+
+      setListVacancies((prevState) => ({
+        ...newVacancies,
+        data: [...(prevState?.data || []), ...newVacancies.data],
+      }));
+      // }
+    }
+  };
+
+  // Mengambil data lowongan pekerjaan saat komponen dimuat
+  useEffect(() => {
+    const getVacancies = async () => {
+      const initialVacancies = await fetchVacancies();
+      if (initialVacancies) {
+        setListVacancies(initialVacancies);
       }
     };
+    getVacancies();
+  }, [fetchVacancies]);
 
-    getAPI();
-  }, [isMobile, name, departement, division]);
+  if (isError) {
+    return <h1>Error</h1>;
+  }
 
-  return (
+  return listVacancies !== null ? (
     <Fragment>
-      {!isEmptyList ? (
+      {listVacancies.data.length === 0 ? (
+        <NotFoundPosition />
+      ) : (
         <Fragment>
           <h2 className="relative text-2xl font-bold lg:text-[32px] lg:leading-10 text-[#90A3BF] justify-self-start w-full md:max-w-[972px] px-10 md:px-[86px]">
             All Open Positions
           </h2>
           <ContainerJob>
-            {positions.slice(0, isMobile ? 5 : 10).map((position, idx) => (
-              <Link
-                href={`/all-jobs/${position.name}`}
-                key={idx}
-                className="flex items-center even:bg-[#F8F8F8] py-6"
-              >
-                <div className="ml-6 lg:ml-[74px] w-full lg:w-[80%]">
-                  <h3 className="text-[16px] lg:text-[22px] text-primary font-bold lg:leading-[28px] mb-4">
-                    {position.name}
-                  </h3>
-                  <div className="flex items-center flex-wrap gap-y-2">
-                    <BriefCasePrimaryIcon />
-
-                    <p className="text-base text-black ml-2 mr-4">
-                      {position.department}
-                    </p>
-                    <DotPrimaryIcon />
-
-                    <p className="text-base text-black ml-2 mr-4">
-                      {position.sector}
-                    </p>
-
-                    <p className="bg-secondary px-4 py-1 text-primary rounded-2xl text-base mr-4">
-                      {position.role}
-                    </p>
-                    <p className="bg-secondary px-4 py-1 text-primary rounded-2xl text-base mr-4">
-                      {position.division}
-                    </p>
-                    {position.urgent && (
-                      <p className="bg-[#CB3A31] px-4 py-1 text-white rounded-2xl text-base mr-4">
-                        Urgent Hiring
-                      </p>
-                    )}
-                  </div>
-                </div>
-
-                <div className="hidden lg:block">
-                  <ArrowRight />
-                </div>
-              </Link>
+            {listVacancies.data.slice(0, itemsToShow).map((vacancie, idx) => (
+              <CardJob vacancie={vacancie} key={idx} />
             ))}
-
             <div className="flex flex-col text-base text-primary justify-center items-center gap-5 pt-10">
               <p>
-                Showing <span className="font-bold">{itemsToShow}</span> out of{" "}
-                <span className="font-bold">20</span>
+                Showing{" "}
+                <span className="font-bold">
+                  {itemsToShow > listVacancies.data.length
+                    ? listVacancies.data.length
+                    : itemsToShow}
+                </span>{" "}
+                out of{" "}
+                <span className="font-bold">
+                  {listVacancies.pagination.total}
+                </span>
               </p>
-
               <button
-                style={{
-                  boxShadow: "0px 25px 30px 0px #0041E81A",
-                }}
-                onClick={showMoreItems}
+                disabled={Boolean(
+                  itemsToShow > listVacancies.pagination.total || isLoading
+                )}
+                onClick={loadMoreData}
                 type="button"
-                className="font-medium lg:font-semibold px-7 py-3 lg:px-8 lg:py-4 bg-[#FFDE59] rounded-[30px]"
+                style={{ boxShadow: "0px 25px 30px 0px #0041E81A" }}
+                className={`font-semibold lg:font-semibold px-7 py-3 lg:px-8 lg:py-4 bg-[#FFDE59] rounded-[30px] text-[#1B4E6B] w-[185px] ${
+                  itemsToShow < listVacancies.pagination.total
+                    ? "cursor-pointer "
+                    : "cursor-not-allowed"
+                }`}
               >
-                Load More Jobs
+                {isLoading ? (
+                  <Loader className="animate-spin mx-auto" />
+                ) : (
+                  <span>Load More Jobs</span>
+                )}
               </button>
             </div>
           </ContainerJob>
         </Fragment>
-      ) : (
-        <NotFoundPosition />
       )}
     </Fragment>
+  ) : (
+    <ContainerJob>
+      <LoadingListJobs list={5} />
+    </ContainerJob>
   );
 };
 

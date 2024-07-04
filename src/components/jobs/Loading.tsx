@@ -1,7 +1,7 @@
 import React from "react";
 
-const LoadingListJobs = () => {
-  return new Array(5).fill(0).map((_, idx) => (
+const LoadingListJobs = ({ list = 5 }: { list: number }) => {
+  return new Array(list).fill(0).map((_, idx) => (
     <div key={idx} className="flex items-center even:bg-[#F8F8F8] py-6">
       <div className="ml-6 lg:ml-[74px] w-full lg:w-[80%] animate-pulse space-y-6">
         <h3 className="h-4 bg-slate-200 w-40 rounded-full"></h3>
