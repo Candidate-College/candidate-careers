@@ -32,20 +32,23 @@ const ListJobs = ({ name, department, division }: TFilterJob) => {
 
         // Filter data berdasarkan nama, departemen, dan divisi
         const filteredData = res.data.filter((vacancy) => {
-          return (
-            !name ||
-            vacancy.name
-              .toLocaleLowerCase()
-              .includes(name.toLocaleLowerCase()) ||
-            !department ||
-            vacancy.department
-              .toLocaleLowerCase()
-              .includes(department.toLocaleLowerCase()) ||
-            !division ||
-            vacancy.division
-              .toLocaleLowerCase()
-              .includes(division.toLocaleLowerCase())
-          );
+          const nameMatch = name
+            ? vacancy.name
+                .toLocaleLowerCase()
+                .includes(name.toLocaleLowerCase())
+            : true;
+          const departmentMatch = department
+            ? vacancy.department
+                .toLocaleLowerCase()
+                .includes(department.toLocaleLowerCase())
+            : true;
+          const divisionMatch = division
+            ? vacancy.division
+                .toLocaleLowerCase()
+                .includes(division.toLocaleLowerCase())
+            : true;
+
+          return nameMatch && departmentMatch && divisionMatch;
         });
 
         return { ...res, data: filteredData };
@@ -64,15 +67,15 @@ const ListJobs = ({ name, department, division }: TFilterJob) => {
     if (listVacancies && itemsToShow < listVacancies.pagination.total) {
       showMoreItems();
       const nextPage = listVacancies.pagination.current_page + 1;
-      // if (nextPage <= listVacancies.pagination.last_page) {
-      const newVacancies = await fetchVacancies(nextPage);
-      if (!newVacancies) return;
+      if (nextPage <= listVacancies.pagination.last_page) {
+        const newVacancies = await fetchVacancies(nextPage);
+        if (!newVacancies) return;
 
-      setListVacancies((prevState) => ({
-        ...newVacancies,
-        data: [...(prevState?.data || []), ...newVacancies.data],
-      }));
-      // }
+        setListVacancies((prevState) => ({
+          ...newVacancies,
+          data: [...(prevState?.data || []), ...newVacancies.data],
+        }));
+      }
     }
   };
 

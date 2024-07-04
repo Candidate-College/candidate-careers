@@ -37,20 +37,23 @@ const MoreJobs = () => {
 
         // Filter data berdasarkan nama, departemen, dan divisi
         const filteredData = res.data.filter((vacancy) => {
-          return (
-            !name ||
-            vacancy.name
-              .toLocaleLowerCase()
-              .includes(name.toLocaleLowerCase()) ||
-            !department ||
-            vacancy.department
-              .toLocaleLowerCase()
-              .includes(department.toLocaleLowerCase()) ||
-            !division ||
-            vacancy.division
-              .toLocaleLowerCase()
-              .includes(division.toLocaleLowerCase())
-          );
+          const nameMatch = name
+            ? vacancy.name
+                .toLocaleLowerCase()
+                .includes(name.toLocaleLowerCase())
+            : true;
+          const departmentMatch = department
+            ? vacancy.department
+                .toLocaleLowerCase()
+                .includes(department.toLocaleLowerCase())
+            : true;
+          const divisionMatch = division
+            ? vacancy.division
+                .toLocaleLowerCase()
+                .includes(division.toLocaleLowerCase())
+            : true;
+
+          return nameMatch && departmentMatch && divisionMatch;
         });
 
         return { ...res, data: filteredData };
@@ -78,6 +81,8 @@ const MoreJobs = () => {
   if (isError) {
     return <h1>Error</h1>;
   }
+
+  // console.log(listVacancies);
 
   return listVacancies !== null ? (
     <Fragment>

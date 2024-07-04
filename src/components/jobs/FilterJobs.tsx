@@ -70,7 +70,6 @@ const FilterJobs = () => {
             <SearchIconNew />
           </div>
           <input
-            required
             autoComplete="off"
             value={form.name}
             onChange={handleClearParams}
@@ -84,7 +83,7 @@ const FilterJobs = () => {
         <div className="flex w-full gap-2 mb-2">
           <div className="relative w-full">
             <select
-              required
+              // required
               value={form.department}
               onChange={(e) =>
                 setForm((prev) => ({ ...prev, department: e.target.value }))
@@ -113,11 +112,11 @@ const FilterJobs = () => {
           <div className="relative w-full">
             <select
               value={form.division}
-              required
+              // required
               onChange={(e) =>
                 setForm((prev) => ({ ...prev, division: e.target.value }))
               }
-              className="w-full md:w-[153px] h-[52px] rounded-[50px] px-6 py-1 appearance-none border text-black invalid:text-[#90A3BF]"
+              className="w-full md:w-[153px] h-[52px] rounded-[50px] pl-6 pr-7 py-1 appearance-none border text-black invalid:text-[#90A3BF]"
               name="division"
             >
               <option value="" disabled hidden className="text-[#90A3BF]">
@@ -133,7 +132,7 @@ const FilterJobs = () => {
                 Fullstack
               </option>
             </select>
-            <div className="absolute inset-y-0 top-1 right-5 md:right-7 flex items-center pointer-events-none">
+            <div className="absolute inset-y-0 top-1 right-5 md:right-9 flex items-center pointer-events-none">
               <CaretGreyIcon />
             </div>
           </div>
