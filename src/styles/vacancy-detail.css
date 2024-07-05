@@ -1,0 +1,7 @@
+.html-content * {
+  all: revert;
+}
+
+.html-content ul {
+  margin-left: -18px;
+}
