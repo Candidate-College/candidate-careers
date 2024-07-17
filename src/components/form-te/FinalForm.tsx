@@ -103,7 +103,8 @@ const FinalForm: React.FC = () => {
             Awesome! Your application is in!
           </h2>
           <p className="text-center text-slate-600 mb-6">
-            Thanks for applying to be our {vacancyDetail.name}! We&apos;ll be in
+            Thanks for applying to be our{" "}
+            {vacancyDetail.name ? vacancyDetail.name : "team"}! We&apos;ll be in
             touch soon.
           </p>
           <div className="flex justify-center">
