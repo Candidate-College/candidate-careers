@@ -1,14 +1,55 @@
-import React, { useState, useEffect } from 'react';
-import Image from 'next/image';
-import { useRouter } from 'next/navigation';
-import LoadingBar from 'react-top-loading-bar';
-import useFormStore from '../store/formStore';
+import React, { useState, useEffect } from "react";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+import LoadingBar from "react-top-loading-bar";
+import useFormStore from "../store/formStore";
+import axios from "axios";
 
 const FinalForm: React.FC = () => {
   const router = useRouter();
   const [progress, setProgress] = useState(0);
   const [navigated, setNavigated] = useState(false);
   const { formData, currentStep } = useFormStore();
+
+  const localData = localStorage.getItem("vacancyDetail");
+  const vacancyDetail = JSON.parse(localData!);
+
+  const sendFormDataToBackend = async () => {
+    try {
+      const formDataSend = new FormData();
+      formDataSend.append("email", formData.email);
+      formDataSend.append("full_name", formData.name);
+      formDataSend.append("university", formData.university);
+      formDataSend.append("major", formData.major);
+      formDataSend.append("instagram", formData.instagramAccount);
+      formDataSend.append("whatsapp", formData.whatsappNumber);
+      formDataSend.append("cv", formData.cv!);
+      formDataSend.append("portfolio", formData.portfolioUrl);
+      formDataSend.append("divisionID", ""); // Replace with actual value if needed
+      formDataSend.append("departmentId", ""); // Replace with actual value if needed
+      formDataSend.append("reason", ""); // Replace with actual value if needed
+      formDataSend.append("leadership_experience", ""); // Replace with actual value if needed
+      formDataSend.append("skill_experience", formData.skills);
+      formDataSend.append("busyness", formData.schedule);
+      formDataSend.append("commitment_value", formData.commitment);
+      formDataSend.append("reason_commitment_value", formData.commitmentReason);
+      formDataSend.append("is_available_for_unpaid", ""); // Replace with actual value if needed
+
+      await axios.post(
+        "https://careers.candidatecollege.org/api/divisions",
+        formDataSend,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
+      console.log("Application submitted successfully!");
+    } catch (error) {
+      console.error("Error submitting application");
+    }
+  };
 
   useEffect(() => {
     setProgress(100);
@@ -22,8 +63,12 @@ const FinalForm: React.FC = () => {
   const handleNavigation = () => {
     setProgress(100);
     setNavigated(true);
-    router.push('/');
+    router.push("/");
   };
+
+  useEffect(() => {
+    sendFormDataToBackend();
+  }, []);
 
   return (
     <>
@@ -58,7 +103,9 @@ const FinalForm: React.FC = () => {
             Awesome! Your application is in!
           </h2>
           <p className="text-center text-slate-600 mb-6">
-            Thanks for applying to be our Front-End Developer! We&apos;ll be in touch soon.
+            Thanks for applying to be our{" "}
+            {vacancyDetail.name ? vacancyDetail.name : "team"}! We&apos;ll be in
+            touch soon.
           </p>
           <div className="flex justify-center">
             <button

@@ -1,4 +1,4 @@
-import create from 'zustand';
+import create from "zustand";
 
 interface FormData {
   email: string;
@@ -15,6 +15,10 @@ interface FormData {
   proofSK: File | null;
   proofJourney: File | null;
   proofSequoia: File | null;
+  skills: string;
+  schedule: string;
+  commitment: string;
+  commitmentReason: string;
 }
 
 interface FormState {
@@ -26,22 +30,27 @@ interface FormState {
 
 const useFormStore = create<FormState>((set) => ({
   formData: {
-    email: '',
-    name: '',
-    domicile: '',
-    university: '',
-    major: '',
-    semester: '',
-    whatsappNumber: '',
-    instagramAccount: '',
-    portfolioUrl: '',
+    email: "",
+    name: "",
+    domicile: "",
+    university: "",
+    major: "",
+    semester: "",
+    whatsappNumber: "",
+    instagramAccount: "",
+    portfolioUrl: "",
     cv: null,
     proofCC: null,
     proofSK: null,
     proofJourney: null,
     proofSequoia: null,
+    skills: "",
+    schedule: "",
+    commitment: "",
+    commitmentReason: "",
   },
-  setFormData: (data) => set((state) => ({ formData: { ...state.formData, ...data } })),
+  setFormData: (data) =>
+    set((state) => ({ formData: { ...state.formData, ...data } })),
   currentStep: 1,
   nextStep: () => set((state) => ({ currentStep: state.currentStep + 1 })),
 }));
