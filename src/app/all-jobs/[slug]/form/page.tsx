@@ -1,9 +1,7 @@
-import React from "react";
-import Image from "next/image";
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@radix-ui/react-label";
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
+import Image from "next/image";
 export default function Page() {
   return (
     <div
