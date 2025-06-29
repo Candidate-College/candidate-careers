@@ -1,8 +1,8 @@
-// components/FormStep2.tsx
+// components/SocialMediaForm.tsx
 import { useForm } from "react-hook-form";
 import { FormField, FormValues } from "./FormField";
 
-export function FormStep2() {
+export function SocialMediaForm() {
   const {
     register,
     handleSubmit,

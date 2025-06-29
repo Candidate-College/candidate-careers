@@ -41,7 +41,7 @@ export function FormField({
         id={name}
         {...register(name)}
         placeholder={placeholder}
-        className="h-14 placeholder:text-sm placeholder:text-primary rounded-md  bg-[#B3C4CE1A]/10"
+        className="h-14 placeholder:text-sm placeholder:text-primary rounded-md bg-[#B3C4CE1A]/10 border border-primary focus-within:ring-2 focus-within:ring-primary"
       />
     </div>
   );

@@ -3,7 +3,7 @@ import { Label } from "@radix-ui/react-label";
 import { useForm } from "react-hook-form";
 import { FormValues, FormField } from "./FormField";
 
-export function FormStep1() {
+export function IdentityForm() {
   const {
     register,
     handleSubmit,
