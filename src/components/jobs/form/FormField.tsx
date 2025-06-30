@@ -1,24 +1,11 @@
 import { Input } from "@/components/ui/input";
+import { FormValues } from "@/interface/form-types";
 import { Label } from "@radix-ui/react-label";
-import { UseFormRegister } from "react-hook-form";
-
-export type FormValues = {
-  email: string;
-  name: string;
-  domicile: string;
-  university: string;
-  major: string;
-  semester: string;
-  whatsapp: string;
-  instagram: string;
-  tiktok: string;
-  x: string;
-  linkedin: string;
-};
+import { Path, UseFormRegister } from "react-hook-form";
 
 interface FormFieldProps {
   label: string;
-  name: keyof FormValues;
+  name: Path<FormValues>;
   placeholder: string;
   register: UseFormRegister<FormValues>;
   required?: boolean;
@@ -41,7 +28,7 @@ export function FormField({
         id={name}
         {...register(name)}
         placeholder={placeholder}
-        className="h-14 placeholder:text-sm placeholder:text-primary rounded-md bg-[#B3C4CE1A]/10 border border-primary focus-within:ring-2 focus-within:ring-primary"
+        className="h-14 placeholder:text-sm placeholder:text-primary rounded-md bg-[#B3C4CE1A]/10 border border-primary focus-within:ring-2 focus-within:ring-primary pb-2"
       />
     </div>
   );
