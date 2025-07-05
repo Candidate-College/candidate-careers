@@ -1,7 +1,7 @@
 import { Input } from "@/components/ui/input";
 import { FormValues } from "@/interface/form-types";
 import { Label } from "@radix-ui/react-label";
-import { Path, UseFormRegister } from "react-hook-form";
+import { FieldError, Path, UseFormRegister } from "react-hook-form";
 
 interface FormFieldProps {
   label: string;
@@ -9,6 +9,7 @@ interface FormFieldProps {
   placeholder: string;
   register: UseFormRegister<FormValues>;
   required?: boolean;
+  errors?: FieldError;
 }
 
 export function FormField({
@@ -17,6 +18,7 @@ export function FormField({
   placeholder,
   register,
   required = true,
+  errors,
 }: FormFieldProps) {
   return (
     <div className="flex flex-col w-full md:w-[48%] space-y-2">
@@ -26,10 +28,14 @@ export function FormField({
       </Label>
       <Input
         id={name}
-        {...register(name)}
+        {...register(name, {
+          required: required ? `${label} is required` : false,
+        })}
         placeholder={placeholder}
         className="h-14 placeholder:text-sm placeholder:text-primary rounded-md bg-[#B3C4CE1A]/10 border border-primary focus-within:ring-2 focus-within:ring-primary pb-2"
       />
+
+      <div className="text-red-600">{errors?.message}</div>
     </div>
   );
 }

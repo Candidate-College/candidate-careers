@@ -21,12 +21,16 @@ export function IdentityForm() {
           name="identity.email"
           placeholder="Enter your email address"
           register={register}
+          errors={errors.identity?.email}
+          required
         />
         <FormField
           label="Name"
-          name="identity.name"
+          name="identity.full_name"
           placeholder="Enter your name"
           register={register}
+          errors={errors.identity?.full_name}
+          required
         />
       </div>
 
@@ -36,12 +40,16 @@ export function IdentityForm() {
           name="identity.domicile"
           placeholder="Enter your city & province"
           register={register}
+          errors={errors.identity?.domicile}
+          required
         />
         <FormField
           label="University"
           name="identity.university"
           placeholder="Enter your university/school name"
           register={register}
+          errors={errors.identity?.university}
+          required
         />
       </div>
 
@@ -51,12 +59,16 @@ export function IdentityForm() {
           name="identity.major"
           placeholder="Enter your major"
           register={register}
+          errors={errors.identity?.major}
+          required
         />
         <FormField
           label="Semester"
           name="identity.semester"
           placeholder="Enter your semester (Ex: 4)"
           register={register}
+          errors={errors.identity?.semester}
+          required
         />
       </div>
 
@@ -69,7 +81,7 @@ export function IdentityForm() {
             +62
           </span>
           <input
-            {...register("identity.whatsapp", { required: true })}
+            {...register("identity.whatsapp_number", { required: true })}
             type="text"
             inputMode="numeric"
             pattern="[0-9]*"

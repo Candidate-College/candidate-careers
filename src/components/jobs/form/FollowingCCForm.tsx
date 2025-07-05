@@ -1,45 +1,43 @@
+"use client";
+
+import { useForm, useFormContext } from "react-hook-form";
+import { FollowingCCInput } from "./FollowingCCInput";
 import { FormValues } from "@/interface/form-types";
-import { Label } from "@radix-ui/react-label";
-import { ImagePlus } from "lucide-react";
-import Link from "next/link";
-import { useFormContext } from "react-hook-form";
+import React, { useEffect, useState } from "react";
 
-type ImageFieldKey =
-  | "candidateCollegeIg"
-  | "mindfulJourneyIg"
-  | "candidateCollegeTiktok"
-  | "sekolahMenulisIg"
-  | "sequoiaIg"
-  | "candidateCollegeX";
-
-const inputs: Array<[ImageFieldKey, string, string, string]> = [
+const inputs: Array<[keyof FormValues["image"], string, string, string]> = [
   [
-    "candidateCollegeIg",
+    "proof_cc_ig_url",
     "@candidate.college",
     "Instagram",
     "https://instagram.com/candidate.college",
   ],
   [
-    "mindfulJourneyIg",
+    "proof_mj_ig_url",
     "@mindfuljourney.cc",
     "Instagram",
     "https://instagram.com/jobonyours.cc",
   ],
   [
-    "candidateCollegeTiktok",
+    "proof_cc_tiktok_url",
     "@candidatecollege",
     "Tiktok",
     "https://tiktok.com/@candidatecollege",
   ],
   [
-    "sekolahMenulisIg",
+    "proof_sm_ig_url",
     "@sekolahmenulis.cc",
     "Instagram",
     "https://instagram.com/sekolahmenulis.cc",
   ],
-  ["sequoiaIg", "@sequoia.cc", "Instagram", "https://instagram.com/sequoia.cc"],
   [
-    "candidateCollegeX",
+    "proof_sequioa_ig_url",
+    "@sequoia.cc",
+    "Instagram",
+    "https://instagram.com/sequoia.cc",
+  ],
+  [
+    "proof_cc_x_url",
     "@CCollege_Ind",
     "X/Twitter",
     "https://x.com/CCollege_Ind",
@@ -49,46 +47,70 @@ const inputs: Array<[ImageFieldKey, string, string, string]> = [
 export function FollowingCCForm() {
   const {
     register,
+    setValue,
     formState: { errors },
-    watch,
   } = useFormContext<FormValues>();
-  const watchFields = watch();
+
+  // Track preview URLs for each image field
+  const [previewUrls, setPreviewUrls] = useState<
+    Partial<Record<keyof FormValues["image"], string>>
+  >({});
+
+  const handleFileChange = (
+    event: React.ChangeEvent<HTMLInputElement>,
+    id: keyof FormValues["image"]
+  ) => {
+    const file = event.target.files?.[0];
+
+    if (file) {
+      if (file.type !== "image/webp" || file.size > 5 * 1024 * 1024) {
+        event.target.value = "";
+        return;
+      }
+
+      setValue(`image.${id}`, file, {
+        shouldDirty: true,
+        shouldValidate: true,
+      });
+
+      const objectUrl = URL.createObjectURL(file);
+      setPreviewUrls((prev) => ({ ...prev, [id]: objectUrl }));
+      console.log(objectUrl);
+    } else {
+      setValue(`image.${id}`, undefined, {
+        shouldDirty: true,
+        shouldValidate: true,
+      });
+      setPreviewUrls((prev) => {
+        const updated = { ...prev };
+        delete updated[id];
+        return updated;
+      });
+    }
+  };
+
+  // Clean up ObjectURLs
+  useEffect(() => {
+    return () => {
+      Object.values(previewUrls).forEach((url) => URL.revokeObjectURL(url));
+    };
+  }, [previewUrls]);
 
   return (
     <div className="grid md:grid-cols-2 gap-6">
-      {inputs.map(([id, label, socmed, link]) => {
-        const file = watchFields?.image?.[id];
-
-        return (
-          <div key={id} className="space-y-2 text-primary">
-            <Label className="block text-base font-medium">
-              Proof of following{" "}
-              <Link href={link} className="underline">
-                {label}
-              </Link>{" "}
-              ({socmed}) *
-            </Label>
-
-            <label
-              htmlFor={id}
-              className="flex items-center justify-center w-24 h-24 border-2 border-primary rounded-md cursor-pointer hover:border-blue-500 hover:bg-blue-50 transition bg-[#B3C4CE1A]/10"
-            >
-              <ImagePlus className="w-8 h-8 text-gray-400" />
-            </label>
-            <input
-              type="file"
-              id={id}
-              {...register(`image.${id}`)}
-              className="hidden"
-            />
-
-            {file && <p>{file.name}</p>}
-            {errors.image?.[id] && (
-              <p className="text-red-500 text-xs">This field is required.</p>
-            )}
-          </div>
-        );
-      })}
+      {inputs.map(([id, label, socmed, link]) => (
+        <FollowingCCInput
+          key={id}
+          id={id}
+          label={label}
+          socmed={socmed}
+          link={link}
+          previewUrl={previewUrls[id] || null}
+          register={register}
+          errors={errors.image?.[id]}
+          onFileChange={(e) => handleFileChange(e, id)}
+        />
+      ))}
     </div>
   );
 }

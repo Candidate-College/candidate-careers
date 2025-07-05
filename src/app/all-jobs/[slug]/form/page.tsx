@@ -9,7 +9,8 @@ import { FormProvider, useForm } from "react-hook-form";
 export default function Page() {
   const methods = useForm<FormValues>({ mode: "onChange" });
   const [step, setStep] = useState(1);
-  const totalSteps = 3;
+  const totalSteps = 4;
+  console.log(step);
 
   return (
     <FormProvider {...methods}>

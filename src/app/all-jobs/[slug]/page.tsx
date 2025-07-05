@@ -1,12 +1,10 @@
+"use client";
+
 import Navbar from "@/components/Navbar";
 import BriefCasePrimaryIcon from "@/components/icons/BriefCasePrimaryIcon";
 import DotPrimaryIcon from "@/components/icons/DotPrimaryIcon";
 import InstagramLogo from "@/components/icons/InstagramLogo";
 import LinkedInLogo from "@/components/icons/LinkedInLogo";
-import TiktokLogo from "@/components/icons/TiktokLogo";
-import TwitterLogo from "@/components/icons/TwitterLogo";
-import ContainerJobDetail from "@/components/jobs/jobs-detail/ContainerJobDetail";
-import { positions } from "@/components/jobs/ListJobs";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";

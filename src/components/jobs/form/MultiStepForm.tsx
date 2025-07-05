@@ -8,6 +8,8 @@ import { FollowingCCForm } from "./FollowingCCForm";
 import { IdentityForm } from "./IdentityForm";
 import { JobFormHeader } from "./JobFormHeader";
 import { SocialMediaForm } from "./SocialMediaForm";
+import { useState } from "react";
+import SuccessPage from "./SuccessPage";
 
 type Props = {
   step: number;
@@ -23,18 +25,23 @@ const slide = {
 
 export const MultiStepForm = ({ step, setStep, totalSteps }: Props) => {
   const { handleSubmit, trigger } = useFormContext<FormValues>();
+  const [isSubmitted, setIsSubmitted] = useState(false);
   const dir = step > 1 ? 1 : -1;
 
   const onSubmit = (data: FormValues) => {
     console.log("🚀 Final Data:", data);
-    // handle submit...
+    setIsSubmitted(true); // Mark as submitted
   };
 
   const next = async () => {
     const valid = await trigger();
     if (!valid) return;
-    if (step < totalSteps) setStep(step + 1);
-    else handleSubmit(onSubmit)();
+    if (step < totalSteps - 1) {
+      setStep(step + 1);
+    } else {
+      setStep(step + 1);
+      handleSubmit(onSubmit)();
+    }
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
@@ -64,47 +71,52 @@ export const MultiStepForm = ({ step, setStep, totalSteps }: Props) => {
       transition={{ layout: { duration: 0.5, ease: "easeInOut" } }}
       className="bg-white overflow-hidden rounded-t-[20px] md:rounded-[20px] px-4 md:px-10 py-5 md:py-6 w-full md:w-[70%] mt-[72px] md:mb-[72px] flex flex-col gap-9 text-primary"
     >
-      <JobFormHeader />
+      {step === totalSteps && isSubmitted ? (
+        <SuccessPage />
+      ) : (
+        <>
+          <JobFormHeader />
+          <div className="flex flex-col gap-4">
+            <div className="relative overflow-hidden">
+              <AnimatePresence mode="wait" custom={dir}>
+                <motion.div
+                  key={step}
+                  custom={dir}
+                  variants={slide}
+                  initial="enter"
+                  animate="center"
+                  exit="exit"
+                  transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                  className="w-full"
+                >
+                  {renderContent()}
+                </motion.div>
+              </AnimatePresence>
+            </div>
 
-      <div className="flex flex-col gap-4">
-        <div className="relative overflow-hidden">
-          <AnimatePresence mode="wait" custom={dir}>
-            <motion.div
-              key={step}
-              custom={dir}
-              variants={slide}
-              initial="enter"
-              animate="center"
-              exit="exit"
-              transition={{ type: "spring", stiffness: 300, damping: 30 }}
-              className="w-full"
+            <div
+              className={`flex ${
+                step > 1 ? "justify-between" : "justify-center"
+              } mt-8`}
             >
-              {renderContent()}
-            </motion.div>
-          </AnimatePresence>
-        </div>
-
-        <div
-          className={`flex ${
-            step > 1 ? "justify-between" : "justify-center"
-          } mt-8`}
-        >
-          {step > 1 && (
-            <Button
-              onClick={prev}
-              className="h-12 w-32 rounded-[30px] font-semibold bg-primary text-secondary hover:text-primary hover:bg-secondary"
-            >
-              Back
-            </Button>
-          )}
-          <Button
-            onClick={next}
-            className="h-12 w-32 rounded-[30px] font-semibold bg-secondary text-primary hover:text-secondary"
-          >
-            {step === totalSteps ? "Submit" : "Continue"}
-          </Button>
-        </div>
-      </div>
+              {step > 1 && (
+                <Button
+                  onClick={prev}
+                  className="h-12 w-32 rounded-[30px] font-semibold bg-primary text-secondary hover:text-primary hover:bg-secondary"
+                >
+                  Back
+                </Button>
+              )}
+              <Button
+                onClick={next}
+                className="h-12 w-32 rounded-[30px] font-semibold bg-secondary text-primary hover:text-secondary"
+              >
+                {step === totalSteps - 1 ? "Submit" : "Continue"}
+              </Button>
+            </div>
+          </div>
+        </>
+      )}
     </motion.div>
   );
 };

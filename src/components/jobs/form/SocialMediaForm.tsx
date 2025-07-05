@@ -21,6 +21,7 @@ export function SocialMediaForm() {
           name="social_media.instagram"
           placeholder="Enter your Instagram username"
           register={register}
+          errors={errors.social_media?.instagram}
           required
         />
         <FormField
@@ -28,6 +29,7 @@ export function SocialMediaForm() {
           name="social_media.tiktok"
           placeholder="Enter your TikTok username"
           register={register}
+          errors={errors.social_media?.tiktok}
           required
         />
       </div>
@@ -37,6 +39,7 @@ export function SocialMediaForm() {
           name="social_media.x"
           placeholder="Enter your X/Twitter username"
           register={register}
+          errors={errors.social_media?.x}
           required
         />
         <FormField
@@ -44,13 +47,10 @@ export function SocialMediaForm() {
           name="social_media.linkedin"
           placeholder="Enter your LinkedIn account URL"
           register={register}
+          errors={errors.social_media?.linkedin}
           required
         />
       </div>
-
-      {Object.keys(errors).length > 0 && (
-        <p className="text-red-500">All fields are required.</p>
-      )}
     </div>
   );
 }
