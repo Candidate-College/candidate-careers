@@ -23,7 +23,7 @@ const SuccessPage = () => {
           Awesome! Your application is in!
         </p>
         <p className="text-[#838282] leading-6">
-          Thanks for applying to be our Brand Ambassador! We'll be in touch
+          Thanks for applying to be our Brand Ambassador! We&apos;ll be in touch
           soon.
         </p>
       </div>

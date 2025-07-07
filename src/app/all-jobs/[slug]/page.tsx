@@ -5,6 +5,10 @@ import BriefCasePrimaryIcon from "@/components/icons/BriefCasePrimaryIcon";
 import DotPrimaryIcon from "@/components/icons/DotPrimaryIcon";
 import InstagramLogo from "@/components/icons/InstagramLogo";
 import LinkedInLogo from "@/components/icons/LinkedInLogo";
+import TiktokLogo from "@/components/icons/TiktokLogo";
+import TwitterLogo from "@/components/icons/TwitterLogo";
+import ContainerJobDetail from "@/components/jobs/jobs-detail/ContainerJobDetail";
+import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -87,7 +91,7 @@ const DetailJob = () => {
                 <div>
                   <ul className="text-base text-[#1F2937] list-disc pl-6">
                     <li>
-                      Bachelor's degree in Computer Science, Information
+                      Bachelor&apos;s degree in Computer Science, Information
                       Technology, or a related field.
                     </li>
                     <li>1+ years of experience in front-end development.</li>

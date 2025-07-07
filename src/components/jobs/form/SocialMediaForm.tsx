@@ -18,36 +18,36 @@ export function SocialMediaForm() {
       <div className="flex flex-col md:flex-row md:items-center w-full md:gap-x-9 gap-y-5 md:gap-y-0 ml-1">
         <FormField
           label="Instagram Username"
-          name="social_media.instagram"
+          name="social_media.instagram_url"
           placeholder="Enter your Instagram username"
           register={register}
-          errors={errors.social_media?.instagram}
+          errors={errors.social_media?.instagram_url}
           required
         />
         <FormField
           label="TikTok Username"
-          name="social_media.tiktok"
+          name="social_media.tiktok_url"
           placeholder="Enter your TikTok username"
           register={register}
-          errors={errors.social_media?.tiktok}
+          errors={errors.social_media?.tiktok_url}
           required
         />
       </div>
       <div className="flex flex-col md:flex-row md:items-center w-full md:gap-x-9 gap-y-5 md:gap-y-0 ml-1 pb-1">
         <FormField
           label="X Username"
-          name="social_media.x"
+          name="social_media.x_url"
           placeholder="Enter your X/Twitter username"
           register={register}
-          errors={errors.social_media?.x}
+          errors={errors.social_media?.x_url}
           required
         />
         <FormField
           label="LinkedIn Account URL"
-          name="social_media.linkedin"
+          name="social_media.linkedin_url"
           placeholder="Enter your LinkedIn account URL"
           register={register}
-          errors={errors.social_media?.linkedin}
+          errors={errors.social_media?.linkedin_url}
           required
         />
       </div>
