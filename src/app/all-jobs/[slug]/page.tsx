@@ -87,7 +87,7 @@ const DetailJob = () => {
                 <div>
                   <ul className="text-base text-[#1F2937] list-disc pl-6">
                     <li>
-                      Bachelor's degree in Computer Science, Information
+                      Bachelor&apos;s degree in Computer Science, Information
                       Technology, or a related field.
                     </li>
                     <li>1+ years of experience in front-end development.</li>
