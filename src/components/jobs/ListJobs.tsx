@@ -11,7 +11,7 @@ import axios from "axios";
 import { TFilterJob } from "@/app/all-jobs/page";
 import ContainerJob from "@/components/jobs/ContainerJob";
 
-const positions = [
+export const positions = [
   {
     id: 1,
     name: "Frontend Developer",
@@ -20,6 +20,7 @@ const positions = [
     role: "Staff",
     urgent: true,
     sector: "Technology",
+    slug: "frontend-developer",
   },
   {
     id: 2,
@@ -29,6 +30,7 @@ const positions = [
     role: "Senior",
     urgent: false,
     sector: "Technology",
+    slug: "backend-developer",
   },
   {
     id: 3,
@@ -38,6 +40,7 @@ const positions = [
     role: "Intern",
     urgent: true,
     sector: "Design",
+    slug: "ui-ux-designer",
   },
   {
     id: 4,
@@ -47,6 +50,7 @@ const positions = [
     role: "Manager",
     urgent: false,
     sector: "Management",
+    slug: "project-manager",
   },
   {
     id: 5,
@@ -56,6 +60,7 @@ const positions = [
     role: "Staff",
     urgent: true,
     sector: "Technology",
+    slug: "qa-engineer",
   },
   {
     id: 6,
@@ -65,6 +70,7 @@ const positions = [
     role: "Senior",
     urgent: false,
     sector: "Technology",
+    slug: "devops-engineer",
   },
   {
     id: 7,
@@ -74,6 +80,7 @@ const positions = [
     role: "Staff",
     urgent: true,
     sector: "Data Analysis",
+    slug: "data-scientist",
   },
   {
     id: 8,
@@ -83,6 +90,7 @@ const positions = [
     role: "Intern",
     urgent: false,
     sector: "Marketing",
+    slug: "marketing-specialist",
   },
   {
     id: 9,
@@ -92,6 +100,7 @@ const positions = [
     role: "Staff",
     urgent: true,
     sector: "Content Creation",
+    slug: "content-writer",
   },
   {
     id: 10,
@@ -101,6 +110,7 @@ const positions = [
     role: "Staff",
     urgent: false,
     sector: "Customer Service",
+    slug: "customer-support",
   },
 ];
 
@@ -133,7 +143,7 @@ const ListJobs = ({ name, departement, division }: TFilterJob) => {
           <ContainerJob>
             {positions.slice(0, isMobile ? 5 : 10).map((position, idx) => (
               <Link
-                href={`/all-jobs/${position.name}`}
+                href={`/all-jobs/${position.slug}`}
                 key={idx}
                 className="flex items-center even:bg-[#F8F8F8] py-6"
               >

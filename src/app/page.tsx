@@ -28,7 +28,9 @@ const Careers = () => {
           Explore your dream job destination!
         </h1>
 
-        <FilterJobs />
+        <Suspense>
+          <FilterJobs />
+        </Suspense>
       </section>
 
       {/* Akhir Hero Section */}
