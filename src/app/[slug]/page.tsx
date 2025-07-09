@@ -18,6 +18,7 @@ import axios from "axios";
 import VacancyHero from "@/components/main-page/vacancy-detail/VacancyHero";
 import VacancyPositionDetail from "@/components/main-page/vacancy-detail/VacancyPositionDetail";
 import Image from "next/image";
+import "./../../styles/vacancy-detail.css";
 
 export interface VacancyDetail {
   slug: string;
