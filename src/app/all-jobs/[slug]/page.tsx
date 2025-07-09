@@ -1,6 +1,5 @@
 "use client";
 
-import Navbar from "@/components/Navbar";
 import BriefCasePrimaryIcon from "@/components/icons/BriefCasePrimaryIcon";
 import DotPrimaryIcon from "@/components/icons/DotPrimaryIcon";
 import InstagramLogo from "@/components/icons/InstagramLogo";
@@ -8,33 +7,20 @@ import LinkedInLogo from "@/components/icons/LinkedInLogo";
 import TiktokLogo from "@/components/icons/TiktokLogo";
 import TwitterLogo from "@/components/icons/TwitterLogo";
 import ContainerJobDetail from "@/components/jobs/jobs-detail/ContainerJobDetail";
+import Navbar from "@/components/Navbar";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { useParams } from "next/navigation";
-import { useEffect, useState } from "react";
 
 const DetailJob = () => {
   const { slug } = useParams();
 
-  const [isMobile, setIsMobile] = useState(false);
-
-  useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth <= 768);
-    };
-
-    handleResize(); // Set initially
-    window.addEventListener("resize", handleResize);
-
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-
   return (
-    <main className="bg-white w-full h-full relative">
+    <main className="bg-white w-full h-full">
       <Navbar position="sticky" />
 
       <div className="absolute h-[343px] bg-primary w-full -z-50"></div>
-      <section className="py-[72px] bg-primary flex">
+      <section className="pt-[72px] pb-[144px] md:pb-[169px] bg-primary flex">
         <div className="text-white h-fit w-full sm:container px-6 sm:px-0 sm:mx-auto xl:max-w-[972px]">
           <h3 className="text-white mb-4 font-bold text-[32px] lg:text-[45px]">
             Front-end Developer
@@ -71,15 +57,16 @@ const DetailJob = () => {
               </p>
             </div>
           </div>
-          {isMobile && (
-            <div className="mt-6 w-full flex justify-center">
-              <Button className="flex items-center justify-center w-full h-14 rounded-[30px] font-semibold bg-secondary text-primary">
-                <Link href={`/all-jobs/${slug}/form`}>Apply Now</Link>
-              </Button>
-            </div>
-          )}
+
+          {/* Mobile Apply Button - Show only on mobile */}
+          <div className="mt-6 w-full flex justify-center md:hidden">
+            <Button className="flex items-center justify-center w-full h-14 rounded-[30px] font-semibold bg-secondary text-primary">
+              <Link href={`/all-jobs/${slug}/form`}>Apply Now</Link>
+            </Button>
+          </div>
         </div>
       </section>
+
       <div className="w-full flex flex-col justify-center items-center relative bottom-[72px] lg:mt-[96px] lg:bottom-[220px]">
         <ContainerJobDetail>
           <div className="px-9 md:px-14 py-[26px] flex flex-col md:flex-row justify-between gap-20 w-full">
@@ -193,34 +180,34 @@ const DetailJob = () => {
                 </p>
               </div>
             </div>
-            {!isMobile && (
-              <div className="w-full md:w-[30%] flex flex-col gap-6">
-                <div className="w-full flex justify-center">
-                  <Button className="flex items-center justify-center w-64 h-16 rounded-[30px] font-semibold">
-                    <Link href={`/all-jobs/${slug}/form`}>Apply Now</Link>
-                  </Button>
-                </div>
-                <div className="flex flex-col gap-3">
-                  <p className="text-[#374151] text-2xl font-semibold leading-7">
-                    Share this listing:
-                  </p>
-                  <div className="flex justify-between">
-                    <div className="bg-secondary p-3 rounded-[25px]">
-                      <InstagramLogo />
-                    </div>
-                    <div className="bg-secondary p-3 rounded-[25px]">
-                      <TiktokLogo />
-                    </div>
-                    <div className="bg-secondary p-3 rounded-[25px]">
-                      <TwitterLogo />
-                    </div>
-                    <div className="bg-secondary p-3 rounded-[25px]">
-                      <LinkedInLogo />
-                    </div>
+
+            {/* Desktop Sidebar - Show only on desktop */}
+            <div className="hidden md:flex w-full md:w-[30%] flex-col gap-6">
+              <div className="w-full flex justify-center">
+                <Button className="flex items-center justify-center w-64 h-16 rounded-[30px] font-semibold">
+                  <Link href={`/all-jobs/${slug}/form`}>Apply Now</Link>
+                </Button>
+              </div>
+              <div className="flex flex-col gap-3">
+                <p className="text-[#374151] text-2xl font-semibold leading-7">
+                  Share this listing:
+                </p>
+                <div className="flex justify-between">
+                  <div className="bg-secondary p-3 rounded-[25px]">
+                    <InstagramLogo />
+                  </div>
+                  <div className="bg-secondary p-3 rounded-[25px]">
+                    <TiktokLogo />
+                  </div>
+                  <div className="bg-secondary p-3 rounded-[25px]">
+                    <TwitterLogo />
+                  </div>
+                  <div className="bg-secondary p-3 rounded-[25px]">
+                    <LinkedInLogo />
                   </div>
                 </div>
               </div>
-            )}
+            </div>
           </div>
         </ContainerJobDetail>
       </div>
