@@ -1,4 +1,9 @@
-import { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+};
 
 export const metadata: Metadata = {
   title:
@@ -35,10 +40,6 @@ export const metadata: Metadata = {
     "Test Hosting",
   ],
   publisher: "Rumah Web",
-  viewport: {
-    width: "device-width",
-    initialScale: 1,
-  },
   referrer: "origin",
   robots: "index, follow",
   themeColor: [

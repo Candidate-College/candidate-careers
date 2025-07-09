@@ -8,99 +8,7 @@ import DotPrimaryIcon from "@/components/icons/DotPrimaryIcon";
 import NotFoundPosition from "./NotFoundPosition";
 import axios from "axios";
 import ContainerJob from "@/components/jobs/ContainerJob";
-
-const positions = [
-  {
-    id: 1,
-    name: "Frontend Developer",
-    department: "IT",
-    division: "Internship",
-    role: "Staff",
-    urgent: true,
-    sector: "Technology",
-  },
-  {
-    id: 2,
-    name: "Backend Developer",
-    department: "IT",
-    division: "Full-time",
-    role: "Senior",
-    urgent: false,
-    sector: "Technology",
-  },
-  {
-    id: 3,
-    name: "UI/UX Designer",
-    department: "Design",
-    division: "Internship",
-    role: "Intern",
-    urgent: true,
-    sector: "Design",
-  },
-  {
-    id: 4,
-    name: "Project Manager",
-    department: "Management",
-    division: "Full-time",
-    role: "Manager",
-    urgent: false,
-    sector: "Management",
-  },
-  {
-    id: 5,
-    name: "QA Engineer",
-    department: "IT",
-    division: "Contract",
-    role: "Staff",
-    urgent: true,
-    sector: "Technology",
-  },
-  {
-    id: 6,
-    name: "DevOps Engineer",
-    department: "IT",
-    division: "Full-time",
-    role: "Senior",
-    urgent: false,
-    sector: "Technology",
-  },
-  {
-    id: 7,
-    name: "Data Scientist",
-    department: "Data",
-    division: "Full-time",
-    role: "Staff",
-    urgent: true,
-    sector: "Data Analysis",
-  },
-  {
-    id: 8,
-    name: "Marketing Specialist",
-    department: "Marketing",
-    division: "Internship",
-    role: "Intern",
-    urgent: false,
-    sector: "Marketing",
-  },
-  {
-    id: 9,
-    name: "Content Writer",
-    department: "Content",
-    division: "Part-time",
-    role: "Staff",
-    urgent: true,
-    sector: "Content Creation",
-  },
-  {
-    id: 10,
-    name: "Customer Support",
-    department: "Support",
-    division: "Full-time",
-    role: "Staff",
-    urgent: false,
-    sector: "Customer Service",
-  },
-];
+import { positions } from "./ListJobs";
 
 const MoreJobs = () => {
   const isEmptyState = false;
@@ -127,7 +35,7 @@ const MoreJobs = () => {
           <ContainerJob>
             {positions.slice(0, 5).map((position, idx) => (
               <Link
-                href={`/all-jobs/${position.name}`}
+                href={`/all-jobs/${position.slug}`}
                 key={idx}
                 className="flex items-center even:bg-[#F8F8F8] py-6"
               >

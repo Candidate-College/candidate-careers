@@ -9,9 +9,24 @@ import LinkedInLogo from "@/components/icons/LinkedInLogo";
 import TiktokLogo from "@/components/icons/TiktokLogo";
 import TwitterLogo from "@/components/icons/TwitterLogo";
 import ContainerJobDetail from "@/components/jobs/jobs-detail/ContainerJobDetail";
+import Link from "next/link";
+import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
 const DetailJob = () => {
+  const { slug } = useParams();
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+
+    handleResize(); // Set initially
+    window.addEventListener("resize", handleResize);
+
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
@@ -67,6 +82,13 @@ const DetailJob = () => {
               </p>
             </div>
           </div>
+          {isMobile && (
+            <div className="mt-6 w-full flex justify-center">
+              <Button className="flex items-center justify-center w-full h-14 rounded-[30px] font-semibold bg-secondary text-primary">
+                <Link href={`/all-jobs/${slug}/form`}>Apply Now</Link>
+              </Button>
+            </div>
+          )}
           {isMobile && (
             <div className="mt-6 w-full flex justify-center">
               <Button className="flex items-center justify-center w-full h-14 rounded-[30px] font-semibold bg-secondary text-primary">
@@ -193,7 +215,7 @@ const DetailJob = () => {
               <div className="w-full md:w-[30%] flex flex-col gap-6">
                 <div className="w-full flex justify-center">
                   <Button className="flex items-center justify-center w-64 h-16 rounded-[30px] font-semibold">
-                    Apply Now
+                    <Link href={`/all-jobs/${slug}/form`}>Apply Now</Link>
                   </Button>
                 </div>
                 <div className="flex flex-col gap-3">
